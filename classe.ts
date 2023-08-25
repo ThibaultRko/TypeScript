@@ -1,84 +1,100 @@
 class Invoice {
-    public declare price: number;
-    private declare vatNumber: string;
-    protected declare deadLine: Date;
+    protected declare deadline: Date;
 
-    constructor() {}
+    constructor(public price: number, private vatNumber: string) {
+        console.log(this.deadline);
+    }
 
     static getDetails() {
-        console.log('un texte de loi');
-        
+        console.log('un super texte de loi');
     }
 }
 
 class UnpaidInvoice extends Invoice {
     constructor(price: number) {
-        super(price, "BE987654321");
-        console.log(this.deadLine);
+        super(price ,'BE0573627173');
         console.log(this.price);
-        //les classes enfants n ont pas acces aux prorps private
-        //console.log(this.vatNumber); => pas ok car private        
+        console.log(this.deadline);
+        // les classes enfants n'ont pas accés aux propriétés private
+        // console.log(this.vatNumber)
     }
 }
- const unpaidInvoice = new UnpaidInvoice()
-const invoice = new Invoice(42, "BE457865324568");
-//public tout le monde a acces a la propriété
- console.log(invoice.price);
-//private => en dehors de ma classe personne n'y a acces
-//  console.log(invoice.vatNumber); => pas ok
-// proteced => en dehors de ma classe ou de ses sousclasse personne n'y a acces
-//  console.log(invoice.deadLine); => pas ok
+
+const invoice = new Invoice(42, 'BE123453214');
+//public tout le monde à accés à la propriété
+console.log(invoice.price);
+
+//private: en dehors de ma classe, personne n'y a accés
+//console.log(invoice.vatNumber);
+
+//protected: en dehors de ma classe ou de ses sous-classes, personne n'y a accés
+//console.log(invoice.deadline);
+
+
+Invoice.getDetails();
+
 
 abstract class Vehicule {
     abstract start(): void;
 
     stop() {
-        console.log('je suis a l arret');
-        
+        console.log('Je suis à l\'arrêt');
     }
 }
 
-// on ne peut pas créer une instance d'une classe abstraite()
-// const car = new Vehicule => pas ok
+class Boat extends Vehicule {
+    start() {
+        console.log('je suis un bateau et je démarre');
+    }
+}
 
-class Boat extends Vehicule{
+class Car extends Vehicule {
     start() {
-        console.log('je suis un bateau et je demarre');
-        
+        console.log('je suis une voiture et je démarre');
     }
 }
-class Car extends Vehicule{
-    start() {
-        console.log('je suis une voiture et je demarre');
-        
-    }
-}
+
+// on ne peut pas créer une instance d'une classe abstraite() 
+// const vehicule = new Vehicule()
 
 function startRace(vehicules: Vehicule[]) {
-    for(const vehicule of vehicules) {
+    for (const vehicule of vehicules) {
         vehicule.start();
     }
 }
 
-//ci dessus les parametres sont une variable declarée 'vehicule' de type 'Vehicule' qui est un tableau donc []
-// une classe peu etre un type
-
 interface Shape {
     numberOfSide: number;
-    render: ()=>void;
+    render: () => void;
+    translate?: () => void;
+    colors?: {
+        [key: string]: string,
+    };
 }
 
 class Square implements Shape {
-    numberOfSide=4;
+    numberOfSide = 4;
+
     render = function() {
-        console.log('je suis un carré');
-    }
+        console.log('je suis un joli carré');
+    };
 }
+
 class Triangle implements Shape {
-    numberOfSide=3;
+    numberOfSide = 3;
+
+    colors = {
+        rouge: 'carmin',
+        bleu: 'ciel'
+    };
+
+    translate() {
+        console.log('je me déplace');
+    };
+
     render = function() {
-        console.log('je suis un triangle');
-    }
+        console.log('je suis un joli triangle');
+    };
 }
 
 const square = new Square();
@@ -86,11 +102,21 @@ const triangle = new Triangle();
 
 function renderShape(shape: Shape) {
     shape.render();
+
+    if (shape.translate !== undefined) {
+        shape.translate(); 
+    }
+
+    // si colors est undefined, on n'essaye pas
+    // d'accéder à sa propriété
+    console.log(shape.colors?.rouge);
 }
 
-//il respecte tout les deux l'interface shape donc ce sont des arguments validés pour ma fonction
-renderShape(square);
-renderShape(triangle);
+// Il respecte tous les deux l'interface shape
+// donc ce sont des arguments valides pour ma
+// function
+renderShape(square)
+renderShape(triangle)
 
 
  
