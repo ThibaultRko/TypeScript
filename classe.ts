@@ -29,6 +29,70 @@ const invoice = new Invoice(42, "BE457865324568");
 // proteced => en dehors de ma classe ou de ses sousclasse personne n'y a acces
 //  console.log(invoice.deadLine); => pas ok
 
+abstract class Vehicule {
+    abstract start(): void;
+
+    stop() {
+        console.log('je suis a l arret');
+        
+    }
+}
+
+// on ne peut pas créer une instance d'une classe abstraite()
+// const car = new Vehicule => pas ok
+
+class Boat extends Vehicule{
+    start() {
+        console.log('je suis un bateau et je demarre');
+        
+    }
+}
+class Car extends Vehicule{
+    start() {
+        console.log('je suis une voiture et je demarre');
+        
+    }
+}
+
+function startRace(vehicules: Vehicule[]) {
+    for(const vehicule of vehicules) {
+        vehicule.start();
+    }
+}
+
+//ci dessus les parametres sont une variable declarée 'vehicule' de type 'Vehicule' qui est un tableau donc []
+// une classe peu etre un type
+
+interface Shape {
+    numberOfSide: number;
+    render: ()=>void;
+}
+
+class Square implements Shape {
+    numberOfSide=4;
+    render = function() {
+        console.log('je suis un carré');
+    }
+}
+class Triangle implements Shape {
+    numberOfSide=3;
+    render = function() {
+        console.log('je suis un triangle');
+    }
+}
+
+const square = new Square();
+const triangle = new Triangle();
+
+function renderShape(shape: Shape) {
+    shape.render();
+}
+
+//il respecte tout les deux l'interface shape donc ce sont des arguments validés pour ma fonction
+renderShape(square);
+renderShape(triangle);
+
+
  
  
 

@@ -22,3 +22,49 @@ console.log(invoice.price);
 //  console.log(invoice.vatNumber); => pas ok
 // proteced => en dehors de ma classe ou de ses sousclasse personne n'y a acces
 //  console.log(invoice.deadLine); => pas ok
+class Vehicule {
+    stop() {
+        console.log('je suis a l arret');
+    }
+}
+// on ne peut pas créer une instance d'une classe abstraite()
+// const car = new Vehicule => pas ok
+class Boat extends Vehicule {
+    start() {
+        console.log('je suis un bateau et je demarre');
+    }
+}
+class Car extends Vehicule {
+    start() {
+        console.log('je suis une voiture et je demarre');
+    }
+}
+function startRace(vehicules) {
+    for (const vehicule of vehicules) {
+        vehicule.start();
+    }
+}
+class Square {
+    constructor() {
+        this.numberOfSide = 4;
+        this.render = function () {
+            console.log('je suis un carré');
+        };
+    }
+}
+class Triangle {
+    constructor() {
+        this.numberOfSide = 3;
+        this.render = function () {
+            console.log('je suis un triangle');
+        };
+    }
+}
+const square = new Square();
+const triangle = new Triangle();
+function renderShape(shape) {
+    shape.render();
+}
+//il respecte tout les deux l'interface shape donc ce sont des arguments validés pour ma fonction
+renderShape(square);
+renderShape(triangle);
